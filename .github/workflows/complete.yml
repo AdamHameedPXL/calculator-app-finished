@@ -1,0 +1,35 @@
+name: Complete Example
+
+on:
+  workflow_dispatch:
+
+jobs:
+  complete-example:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - run: npm install
+
+      - run: npm run build --if-present
+
+      - name: Run tests
+        run: npm test
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: junit.xml
+
+      - name: Verify directory contents
+        run: ls -alhR
+
+      - name: Bundle app files + node_modules into zip
+        run: zip -r app_bundle.zip app node_modules
