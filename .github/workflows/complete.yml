@@ -22,10 +22,6 @@ jobs:
       - name: Run tests
         run: npm test --coverage
 
-      - name: Upload test report
-        with:
-          name: test-report
-          path: junit.xml
 
       - name: Verify directory contents
         run: ls -alhR
